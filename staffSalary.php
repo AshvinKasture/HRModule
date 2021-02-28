@@ -1,7 +1,13 @@
-<?php
+<?php 
 session_start();
+error_reporting(0);
+include('connect.php');
+if(strlen($_SESSION['login'])==0)
+  { 
+header('location:login.html');
+}
+else{
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -217,3 +223,4 @@ session_start();
 </body>
 
 </html>
+<?php } ?>
