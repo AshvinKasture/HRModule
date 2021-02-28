@@ -1,14 +1,8 @@
-<?php 
+<?php
 session_start();
-error_reporting(0);
-include('connect.php');
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:login.html');
-}
-else{
-?>
+include('dbconnect.php');
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,8 +34,8 @@ else{
                                     <label for="lbl1">Employee ID:</label>
                                     <select class="form-control" name="id" id="id1" required>
                                         <?php
-                                            $searchquery = "SELECT * FROM staff";
-                                            $result = mysqli_query($con, $searchquery);
+                                            $searchquery = "SELECT * FROM employee";
+                                            $result = mysqli_query($conn, $searchquery);
 
                                             if (mysqli_num_rows($result) > 0) {
                                                 // output data of each row
@@ -70,8 +64,8 @@ else{
                                                 $lbl = $_POST["btn"];
                                             if ($lbl == "Check") {
                                                 $id = $_POST['id'];
-                                                $selectQuery = "Select * from leaves where Staff_ID= '$id'";
-                                                $result = mysqli_query($con, $selectQuery);
+                                                $selectQuery = "Select * from leaves where Employee_ID= '$id'";
+                                                $result = mysqli_query($conn, $selectQuery);
                                                 if (mysqli_num_rows($result) > 0) {
                                                     ?>
                             <div class="table-responsive">
@@ -154,4 +148,3 @@ else{
 </body>
 
 </html>
-<?php } ?>

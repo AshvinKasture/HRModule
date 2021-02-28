@@ -1,14 +1,8 @@
-<?php 
+<?php
 session_start();
-error_reporting(0);
-include('connect.php');
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:login.html');
-}
-else{
-?>
+include('dbconnect.php');
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +26,7 @@ else{
 
             <div class="info">
                 <div>
-                <div class="row">
+                    <div class="row">
                         <div class="col-sm-2">
                         </div>
                         <div class="col-sm-4">
@@ -41,8 +35,8 @@ else{
                                     <label for="lbl1">Employee ID:</label>
                                     <select class="form-control" name="id" id="id1" required>
                                         <?php
-                                            $searchquery = "SELECT * FROM staff";
-                                            $result = mysqli_query($con, $searchquery);
+                                            $searchquery = "SELECT * FROM employee";
+                                            $result = mysqli_query($conn, $searchquery);
 
                                             if (mysqli_num_rows($result) > 0) {
                                                 // output data of each row
@@ -71,13 +65,12 @@ else{
                                                 $lbl = $_POST["btn"];
                                             if ($lbl == "Check") {
                                                 $id = $_POST['id'];
-                                                $selectQuery = "Select * from staff where staff_id = '$id'";
-                                                $result = mysqli_query($con, $selectQuery);
+                                                $selectQuery = "Select * from employee where staff_id = '$id'";
+                                                $result = mysqli_query($conn, $selectQuery);
                                                 if (mysqli_num_rows($result) == 1) {
                                                     if ($row1 = mysqli_fetch_assoc($result)) {
                                                         $fn = $row1['firstname'];
                                                         $ln = $row1['lastname'];
-                                                        $userphoto=$row1['photo'];
                                                         $_SESSION['id']=$_POST['id'];
 
                                                     }
@@ -87,19 +80,7 @@ else{
                             <div class="card" style="width: 18rem;">
                                 <div class="card-body">
                                     <h5 class="card-title">Employee Details</h5>
-                
-                                     <p > 
-                                            <?php
-                                            if($userphoto==""):
-                                            ?>
-                                            <img src="asset/img.png"   width="100" height="100" alt="Photo Size Is More Than 2MB Can't Be Displayed" >
-                                            <?php else:?>
-                                            <img src="profilePhoto/<?php echo htmlentities($userphoto);?>"   width="100" height="100" style = "border-radius : 50px; align:center" alt="Photo Size Is More Than 2MB Can't Be Displayed">
-
-                                            <?php endif;?>
-                                             
-                                            </p>
-                                            <br><br>
+                                    <img src='img.png' height="150" width="150" style="border-radius: 50%;"><br><br>
                                     <h6 class="card-subtitle mb-2 text-muted">Name:</h6>
                                     <p class="card-text"><?php echo $fn.' '.$ln;?></p>
                                 </div>
@@ -138,16 +119,18 @@ else{
                                     </div>
                                     <div class="form-group" id="long" style="display: none;">
                                         <label for="example-date-input" class="form-label">Start Date:</label>
-                                        <input class="form-control" type="date" id="example-date-input" name="startdate"><br>
+                                        <input class="form-control" type="date" id="example-date-input"
+                                            name="startdate"><br>
                                         <label for="example-date-input" class="form-label">End Date:</label>
                                         <input class="form-control" type="date" id="example-date-input" name="enddate">
 
                                     </div>
                                     <div class="form-group" id="whole" style="display: none;">
                                         <label for="example-date-input" class="form-label"> Date:</label>
-                                        <input class="form-control" type="date" id="example-date-input" name="date1"><br>
+                                        <input class="form-control" type="date" id="example-date-input"
+                                            name="date1"><br>
                                     </div><br>
-                                   
+
                                     <div class="form-group">
                                         <label for="comment">Reason:</label>
                                         <textarea class="form-control" rows="3" id="reason1" name="reason"></textarea>
@@ -170,14 +153,14 @@ else{
                                                $status="pending";
 
                                                if ($lbl == "Submit") {
-                                                   $insertQuery = "INSERT INTO `leaves`(`Staff_ID`, `Leave_Type`, `StartDate`, `StartTime`, `EndTime`, `Reason`,`Status`) 
+                                                   $insertQuery = "INSERT INTO `leaves`(`Employee_ID`, `Leave_Type`, `StartDate`, `StartTime`, `EndTime`, `Reason`,`Status`) 
                                                    VALUES ('$n1','$type','$date','$time1','$time2','$reason','$status')";
                                                    if (mysqli_query($conn, $insertQuery)) {
                                                        echo "<script>alert('Successfully inserted');</script>";
                                                    } else {
-                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($con);
+                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($conn);
                                                    }
-                                                   #mysqli_close($con);
+                                                   #mysqli_close($conn);
                                                }
                                            }
                                            if (isset($_POST["type"]) && !empty($_POST["type"]) && !empty($_POST["startdate"]) && isset($_POST["startdate"]))
@@ -194,14 +177,14 @@ else{
 
                 
                                                if ($lbl == "Submit") {
-                                                   $insertQuery = "INSERT INTO `leaves`(`Staff_ID`, `Duration`, `StartDate`, `EndDate`, `Reason`,`Status`)  
+                                                   $insertQuery = "INSERT INTO `leaves`(`Employee_ID`, `Duration`, `StartDate`, `EndDate`, `Reason`,`Status`)  
                                                    VALUES ('$n1','$type','$startdate','$enddate','$reason','$status')";
-                                                   if (mysqli_query($con, $insertQuery)) {
+                                                   if (mysqli_query($conn, $insertQuery)) {
                                                        echo "<script>alert('Successfully inserted1');</script>";
                                                    } else {
-                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($con);
+                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($conn);
                                                    }
-                                                   #mysqli_close($con);
+                                                   #mysqli_close($conn);
                                                }
                                            }
                                            if (isset($_POST["type"]) && !empty($_POST["type"]) && !empty($_POST["date1"]) && isset($_POST["date1"]))
@@ -214,14 +197,14 @@ else{
                                                $date1=$_POST["date1"];
                                                $status="pending";
                                                if ($lbl == "Submit") {
-                                                   $insertQuery = "INSERT INTO `leaves`(`Staff_ID`, `Leave_Type`, `StartDate`, `Reason`,`Status`)  
+                                                   $insertQuery = "INSERT INTO `leaves`(`Employee_ID`, `Leave_Type`, `StartDate`, `Reason`,`Status`)  
                                                    VALUES ('$n1','$type','$date1','$reason','$status')";
-                                                   if (mysqli_query($con, $insertQuery)) {
+                                                   if (mysqli_query($conn, $insertQuery)) {
                                                        echo "<script>alert('Successfully inserted2');</script>";
                                                    } else {
-                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($con);
+                                                       echo "error" . $insertQuery . "<br>" . mysqli_error($conn);
                                                    }
-                                                   #mysqli_close($con);
+                                                   #mysqli_close($conn);
                                                }
                                            }
                                            
@@ -240,36 +223,30 @@ else{
         </div>
     </div>
     <script>
-                    function yesnoCheck(that) {
-                        if (that.value == "short") {
-                            document.getElementById("ifYes").style.display = "block";
-                        } 
-                        else
-                        {
-                            document.getElementById("ifYes").style.display = "none";
+    function yesnoCheck(that) {
+        if (that.value == "short") {
+            document.getElementById("ifYes").style.display = "block";
+        } else {
+            document.getElementById("ifYes").style.display = "none";
 
-                        }
-                        if (that.value == "long"){
-                            document.getElementById("long").style.display = "block";
-                        }
-                        else
-                        {
-                            document.getElementById("long").style.display = "none";
+        }
+        if (that.value == "long") {
+            document.getElementById("long").style.display = "block";
+        } else {
+            document.getElementById("long").style.display = "none";
 
-                        }
-                        
-                        if (that.value == "whole"){
-                            document.getElementById("whole").style.display = "block";
+        }
 
-                        }
-                        else
-                        {
-                            document.getElementById("whole").style.display = "none";
+        if (that.value == "whole") {
+            document.getElementById("whole").style.display = "block";
 
-                        }
-                        
-                    }
-                    </script>
+        } else {
+            document.getElementById("whole").style.display = "none";
+
+        }
+
+    }
+    </script>
 
 
 
@@ -277,4 +254,3 @@ else{
 </body>
 
 </html>
-<?php } ?>
