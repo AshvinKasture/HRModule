@@ -22,6 +22,7 @@ else{
         $extension = substr($filename,strlen($filename)-4,strlen($filename));
         $allowed_extensions = array(".jpg",".jpeg",".png",".gif",".JPG",".PNG");
         $imgnewfile=($filename).$extension;
+
        
 
 
