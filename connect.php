@@ -2,8 +2,8 @@
 define('DB_SERVER','localhost');
 define('DB_USER','root');
 define('DB_PASS' ,'');
-define('DB_NAME', 'hrmodule');
-$con = mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
+define('DB_NAME', 'dummy');
+$conn = mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
 
 
 if (mysqli_connect_errno())
