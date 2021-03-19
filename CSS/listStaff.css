@@ -1,0 +1,43 @@
+body {
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.container,
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table,
+.container td,
+.container th {
+  border-collapse: collapse;
+  padding: 8px;
+}
+
+.container tr:nth-child(even) {
+  background-color: #b1b1b175;
+}
+
+.container tbody tr:hover {
+  background-color: rgb(190, 190, 190);
+}
+
+.container th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: solid black;
+}
+
+.dark {
+  background-color: #272525;
+  color: aliceblue;
+}
+button {
+  padding: 15px;
+  border-radius: 5px;
+}
